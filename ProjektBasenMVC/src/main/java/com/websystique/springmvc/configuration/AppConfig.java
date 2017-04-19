@@ -17,7 +17,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 import com.websystique.springmvc.converter.RoleToUserProfileConverter;
 
-
+//test 
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "com.websystique.springmvc")

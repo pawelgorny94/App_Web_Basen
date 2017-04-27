@@ -15,6 +15,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Wejscie na basen</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">

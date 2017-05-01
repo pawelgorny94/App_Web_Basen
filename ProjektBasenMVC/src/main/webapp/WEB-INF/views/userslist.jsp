@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ page isELIgnored="false" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="h" uri="http://java.sun.com/jsp/jstl/functions" %>
 
@@ -168,6 +169,29 @@ $(function() {
 });
 
 $(function() {
+
+	
+	
+	
+	
+
+	$('#ustal').click(function(){  //Adds click event listener  
+
+    	if ($('#ustalaniecennika').css("visibility") == "hidden") {
+    		$('#ustalaniecennika').css("visibility", "visible");
+        } else {
+        	$('#ustalaniecennika').toggle('slow');
+        }
+
+        
+    	 //$('#wejscie').css("visibility", "visible");
+       // $('#wejscie').toggle('slow'); // Toggles visibility.  Use the 'slow' parameter to add a nice effect.
+       
+
+        });
+});
+
+$(function() {
 var test;
 $("#start").on("click", function (event) {
     var pageVisisted = new Date();
@@ -314,7 +338,12 @@ $(function(){
 </tr>
 <tr>
 <td><input type="button" class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Stan"></td>
-<td><input type="button" class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Raporty"></td>
+<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+<td><input type="button" class="btn btn-primary btn-lg" id="ustal" style="width: 120px;height: 120px;margin: 6px;"  value="Cennik"></td>
+</sec:authorize>
+<sec:authorize access="hasRole('USER') ">
+<td><input type="button" title="Niedostepne w tym trybie" class="btn btn-primary disabled" id="ustal" style="width: 120px;height: 120px;margin: 6px;"  value="Cennik"></td>
+</sec:authorize>
 </tr>
 <tr>
 <td><input type="button"  class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Inne"></td>
@@ -461,6 +490,48 @@ $(function(){
 					  <td><input id="idhidden" type="hidden" value="${user.price}"/></td>
 					   
 					</tr>
+				</c:forEach>
+				
+				
+	    		</tbody>
+	    	</table>
+		</div>
+		
+		<div id="ustalaniecennika" class="panel panel-default"  style="position:fixed; width:900px;float:right;visibility:hidden;margin-left: 300px;margin-bottom: 500px;z-index: 50px; ">
+			  <!-- Default panel contents -->
+		  	<div class="panel-heading"><span class="lead">Ustalanie cennika </span></div>
+			<table id="tabwyj" class="table table-hover">
+	    		<thead>
+		      		<tr>
+				        <th>Rodzaj</th>
+				        <th>Cena</th>
+				       
+				          
+				                
+				        
+				        <sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
+				        	<th width="100"></th>
+				        </sec:authorize>
+				        <sec:authorize access="hasRole('ADMIN')">
+				        	<th width="100"></th>
+				        </sec:authorize>
+				        
+					</tr>
+		    	</thead>
+	    		<tbody>
+				<c:forEach items="${tickets}" var="user">
+				
+					<tr>
+						<td>${user.type}</td>
+						<td> ${user.price} </td>						
+						
+						  <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
+							
+							<td><a href="<c:url value='/price-ticket-${user.type}' />" class="btn btn-danger custom-width">Ustal</a></td>
+				        </sec:authorize>
+					   
+					</tr>
+					
 				</c:forEach>
 				
 				

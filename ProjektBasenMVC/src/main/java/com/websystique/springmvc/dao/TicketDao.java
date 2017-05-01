@@ -9,6 +9,8 @@ public interface TicketDao {
 	
 	Ticket findById(int id);
 	
+	Ticket findByType(String type);
+	
 	Ticket findBySSO(String sso);
 	
 	void save(Ticket user);

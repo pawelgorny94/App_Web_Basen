@@ -23,6 +23,16 @@ public class TicketDaoImpl extends AbstractDao<Integer, Ticket> implements Ticke
 		
 		return ticket;
 	}
+	
+	@Override
+	public Ticket findByType(String type) {
+		Criteria crit = createEntityCriteria();
+		crit.add(Restrictions.eq("type", type));
+		Ticket ticket = (Ticket)crit.uniqueResult();
+		
+		return ticket;
+	}
+
 
 	public Ticket findBySSO(String sso) {
 		logger.info("SSO : {}", sso);
@@ -57,4 +67,5 @@ public class TicketDaoImpl extends AbstractDao<Integer, Ticket> implements Ticke
 		delete(ticket);
 	}
 
+	
 }

@@ -30,6 +30,7 @@
 					<div class="col-md-7">
 						<form:input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
 						<div class="has-error">
+						
 							<form:errors path="firstName" class="help-inline"/>
 						</div>
 					</div>

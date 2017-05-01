@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.primefaces.component.inputtext.InputText;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationTrustResolver;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.websystique.springmvc.model.AllClients;
@@ -138,6 +140,8 @@ public class AppController {
 		//return "success";
 		return "registrationsuccess";
 	}
+	
+	
 
 
 	@RequestMapping(value = { "/newuserp" }, method = RequestMethod.POST)
@@ -206,6 +210,49 @@ allclientsService.updateClient(user);
 	}
 	
 	
+	@RequestMapping(value = { "/price-ticket-{type}" }, method = RequestMethod.GET)
+	public String editPrice(@PathVariable String type, ModelMap model) {
+		//AllClients user = allclientsService.findById(type);
+		//List<Ticket> ticket = ticketService.findAllTicket();
+		Ticket newticket = ticketService.findByType(type);
+		//newticket.setType(type);
+		//for (Ticket ticket2 : ticket) {
+			//if(ticket2.getType()==type){
+				//newticket=ticket2;
+			//}
+		//}
+		
+		model.addAttribute("tickets", newticket);
+		model.addAttribute("edit", true);
+		model.addAttribute("loggedinuser", getPrincipal());
+		return "registrationsuccess";
+	}
+	
+	
+	@RequestMapping(value = { "/price-ticket-{type}" }, method = RequestMethod.POST)
+	public String updatePrice(@Valid Ticket user, BindingResult result,
+			ModelMap model, @PathVariable String type) {
+
+		if (result.hasErrors()) {
+			return "registration";
+		}
+
+		/*
+		if(!userService.isUserSSOUnique(user.getId(), user.getSsoId())){
+			FieldError ssoError =new FieldError("user","ssoId",messageSource.getMessage("non.unique.ssoId", new String[]{user.getSsoId()}, Locale.getDefault()));
+		    result.addError(ssoError);
+			return "registration";
+		}*/
+
+
+		//userService.updateUser(user);
+//allclientsService.updateClient(user);
+		ticketService.updateTicket(user);
+		
+		model.addAttribute("success", "Bilet  " + user.getType() + " cena "+ user.getPrice() + " edycja pomyslna");
+		//model.addAttribute("loggedinuser", getPrincipal());
+		return "registrationsuccess";
+	}
 	
 	
 	

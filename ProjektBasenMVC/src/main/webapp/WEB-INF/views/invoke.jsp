@@ -442,7 +442,7 @@ tr:hover .cut { opacity: 1; }
 				</thead>
 				<tbody>
 					<tr>
-						<td><a class="cut">-</a><span contenteditable></span></td>
+						<!-- <td><a class="cut">-</a><span contenteditable></span></td>-->
 						<td><span contenteditable> </span></td>
 						<td><span data-prefix>PLN</span><span contenteditable> </span></td>
 						<td><span contenteditable> </span></td>
@@ -450,7 +450,7 @@ tr:hover .cut { opacity: 1; }
 					</tr>
 				</tbody>
 			</table>
-			<a class="add">+</a>
+			<!--  <a class="add">+</a>-->
 			<table class="balance">
 				<tr>
 					<th><span contenteditable>Cena netto</span></th>

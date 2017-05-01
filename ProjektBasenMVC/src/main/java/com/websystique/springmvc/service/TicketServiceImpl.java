@@ -25,6 +25,11 @@ public class TicketServiceImpl  implements TicketService{
 		return dao.findById(id);
 	}
 
+	
+	@Override
+	public Ticket findByType(String type) {
+		return dao.findByType(type);
+	}
 
 
 	@Override
@@ -62,5 +67,9 @@ public class TicketServiceImpl  implements TicketService{
 	public List<Ticket> findAllTicket() {
 		return dao.findAllTickets();
 	}
+
+
+
+	
 
 }

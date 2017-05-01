@@ -8,6 +8,7 @@ import com.websystique.springmvc.model.Ticket;
 public interface TicketService {
 	
 	Ticket findById(int id);
+	Ticket findByType(String type);
 	
 	Ticket findBySSO(String sso);
 		

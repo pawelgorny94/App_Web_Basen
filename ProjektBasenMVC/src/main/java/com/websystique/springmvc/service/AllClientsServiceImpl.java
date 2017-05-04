@@ -63,7 +63,7 @@ public class AllClientsServiceImpl implements AllClientsService {
 	public List<AllClients> findAllClient() {
 		return dao.findAllClients();
 	}
-
+        
 	@Override
 	public boolean isUserSSOUnique(Integer id, String sso) {
 		AllClients user = findBySSO(sso);

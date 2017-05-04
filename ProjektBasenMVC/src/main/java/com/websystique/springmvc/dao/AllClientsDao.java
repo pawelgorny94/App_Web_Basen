@@ -16,5 +16,5 @@ public interface AllClientsDao {
 	
 	void deleteBySSO(Integer sso);
 	
-	List<AllClients> findAllClients();
+	List<AllClients> findAllClients();   
 }

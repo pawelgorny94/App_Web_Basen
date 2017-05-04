@@ -101,7 +101,28 @@ $(function() {
 
         });
 });
+$(function() {
 
+	
+	
+	
+	
+
+	$('#sta').click(function(){  //Adds click event listener  
+
+    	if ($('#stan').css("visibility") == "hidden") {
+    		$('#stan').css("visibility", "visible");
+        } else {
+        	$('#stan').toggle('slow');
+        }
+
+        
+    	 //$('#wejscie').css("visibility", "visible");
+       // $('#wejscie').toggle('slow'); // Toggles visibility.  Use the 'slow' parameter to add a nice effect.
+       
+
+        });
+});
 
 $(function() {
 
@@ -249,6 +270,7 @@ $(function() {
 });
 
 
+
 $(function() {
 
 	
@@ -337,7 +359,7 @@ $(function(){
 <td><input type="button" class="btn btn-primary btn-lg" id="wyj" style="width: 120px;height: 120px;margin: 6px;"  value="Wyjscie"></td>
 </tr>
 <tr>
-<td><input type="button" class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Stan"></td>
+<td><input type="button" class="btn btn-primary btn-lg" id="sta" style="width: 120px;height: 120px;margin: 6px;"  value="Stan"></td>
 <sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
 <td><input type="button" class="btn btn-primary btn-lg" id="ustal" style="width: 120px;height: 120px;margin: 6px;"  value="Cennik"></td>
 </sec:authorize>
@@ -347,7 +369,7 @@ $(function(){
 </tr>
 <tr>
 <td><input type="button"  class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Inne"></td>
-<td><a href="<c:url value="/logout" />"><input type="button"   class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Wylogowanie"></a></td>
+<td><a href="<c:url value="/logout" />"><input type="button"   class="btn btn-primary btn-lg" style="width: 120px;height: 120px;margin: 6px;"  value="Wyloguj"></a></td>
 </tr>
 
 
@@ -496,6 +518,44 @@ $(function(){
 	    		</tbody>
 	    	</table>
 		</div>
+                
+                <div id="stan" class="panel panel-default"  style="position:fixed; width:900px;float:right;visibility:hidden;margin-left: 300px;margin-bottom: 500px;z-index: 50px; ">
+			  <!-- Default panel contents -->
+		  	<div class="panel-heading"><span class="lead">Stan klientów na basenie </span></div>
+			<table id="tabstan" class="table table-hover">
+	    		<thead>
+		      		<tr>
+				        <th>Imie</th>
+				        <th>Nazwisko</th>
+				        <th style="">Indentyfiaktor</th>
+				          
+				                
+				        
+				        <sec:authorize access="hasRole('ADMIN') or hasRole('USER')">
+				        	<th width="100"></th>
+				        </sec:authorize>
+				        <sec:authorize access="hasRole('ADMIN')">
+				        	<th width="100"></th>
+				        </sec:authorize>
+				        
+					</tr>
+		    	</thead>
+	    		<tbody>
+				<c:forEach items="${allclients}" var="user">
+					<tr>
+						<td>${user.firstName}</td>
+						<td>${user.lastName}</td>
+						<td>${user.id}</td>
+					</tr>
+				</c:forEach>
+				
+				
+	    		</tbody>
+	    	</table>
+		</div>
+
+
+
 		
 		<div id="ustalaniecennika" class="panel panel-default"  style="position:fixed; width:900px;float:right;visibility:hidden;margin-left: 300px;margin-bottom: 500px;z-index: 50px; ">
 			  <!-- Default panel contents -->

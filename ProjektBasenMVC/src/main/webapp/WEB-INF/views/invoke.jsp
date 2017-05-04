@@ -15,6 +15,7 @@
 
 <script >
 
+
 (function (document) {
 	var
 	head = document.head = document.getElementsByTagName('head')[0] || document.documentElement,
@@ -78,7 +79,9 @@
 
 /* Helper Functions
 /* ========================================================================== */
-
+function time() {
+    document.write(((x=(t=new Date()).getDate())<10?"0":"")+x+"."+((x=(t.getMonth()+1))<10?"0":"")+x+"."+t.getFullYear()+" "+/[\d:]{8}/.exec(t));
+}
 function generateTableRow() {
 	var emptyColumn = document.createElement('tr');
 
@@ -402,7 +405,11 @@ tr:hover .cut { opacity: 1; }
 
 </head>
 <body>
+
 <header>
+    <span class="input-group-addon">Koszt podstawowy</span>
+    
+   
 			<h1>Faktura</h1>
 			<address contenteditable>
 				<p>Pawel</p>
@@ -418,12 +425,17 @@ tr:hover .cut { opacity: 1; }
 			</address>
 			<table class="meta">
 				<tr>
-					<th><span contenteditable>Numer faktury</span></th>
-					<td><span contenteditable>101138</span></td>
+					<th><span class="input-group-addon">Numer faktury</span></th>
+                                        <td><span contenteditable><script>
+                                            document.write( Math.round(Math.random()*99999) + " ");
+                                       </script></span></td>
 				</tr>
 				<tr>
 					<th><span contenteditable>Data</span></th>
-					<td><span contenteditable>1.06.2017</span></td>
+					<td><span contenteditable><script>
+                                        document.write(((x=(t=new Date()).getDate())<10?"0":"")+x+"."+((x=(t.getMonth()+1))<10?"0":"")+x+"."+t.getFullYear()+" "+/[\d:]{8}/.exec(t));
+                                        $('#ms').val(dat);
+                                        </script></span></td>
 				</tr>
 				<tr>
 					<th><span contenteditable>Kwota</span></th>

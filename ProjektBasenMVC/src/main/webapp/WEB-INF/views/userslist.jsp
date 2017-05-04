@@ -281,11 +281,17 @@ $(function() {
 	$('#stop').click(function(){  //Adds click event listener  
 
 		var bla = $('#idhidden').val();
+                var im = $('#idhidden1').val();
+                var naz = $('#idhidden2').val();
+                var typ = $('#idhidden3').val();
+               
 		$('#wyjscie').css("visibility", "hidden");
         	//$('#kasa').css("visibility", "visible");
         	$('#kasa').show();
         	 $('#msg').val(bla);
-
+                 $('#im').val(im);
+                 $('#naz').val(naz);
+                 $('#typ').val(typ);
         
     	 //$('#wejscie').css("visibility", "visible");
        // $('#wejscie').toggle('slow'); // Toggles visibility.  Use the 'slow' parameter to add a nice effect.
@@ -293,7 +299,6 @@ $(function() {
 
         });
 });
-
 $(function() {
 
 	
@@ -482,7 +487,7 @@ $(function(){
 				        <th>Nazwisko</th>
 				        <th style="">Indentyfiaktor</th>
 				        <th style="">Cena</th>
-				        <th style="">Czas</th>
+                                        <th style="">Czas</th>
 				          
 				                
 				        
@@ -510,7 +515,9 @@ $(function(){
 						
 					   <td><button  id="stop" class="btn btn-warning custom-width">Rozlicz</button></td>
 					  <td><input id="idhidden" type="hidden" value="${user.price}"/></td>
-					   
+                                          <td><input id="idhidden1" type="hidden" value="${user.firstName}"/><td>
+					  <td><input id="idhidden2" type="hidden" value="${user.lastName}"/><td>
+                                          <td><input id="idhidden3" type="hidden" value="${user.type}"/><td>
 					</tr>
 				</c:forEach>
 				
@@ -647,11 +654,16 @@ $(function(){
 	    	</table>
 		</div>
 		
-		<div id="kasa" class="panel panel-primary"  style="position:fixed; width:900px;float:right;display:none; margin-top:330px;margin-left: 300px;margin-bottom: 200px;z-index: 50px;">
+		<div id="kasa" class="panel panel-primary"  style="position:fixed; width:900px;float:right;display:none; margin-top:140px;margin-left: 300px;margin-bottom: 200px;z-index: 50px;">
 			  <!-- Default panel contents -->
 		  	<div class="panel-heading"><span class="lead">Rozliczenie</span>
-		  	
-		  	 <span id="clkas" class="pull-right" style=" background:rgba(0, 0, 0, 0.15);
+		  	<span class="input-group-addon">Imie</span>
+                        <input id="im" type="im" class="form-control" name="im"  placeholder="Imie">
+		  	 <span class="input-group-addon">Nazwisko</span>
+                         <input id="naz" type="naz" class="form-control" name="naz"  placeholder="Nazwisko">
+                         <span class="input-group-addon">Typ biletu</span>
+                        <input id="typ" type="typ" class="form-control" name="typ"  placeholder="Typ">
+                        <span id="clkas" class="pull-right" style=" background:rgba(0, 0, 0, 0.15);
     display: inline-block;padding: 6px 12px;border-radius: 4px;cursor: pointer;" data-effect="slideUp"><i class="fa fa-times"></i></span>
 		  	</div>
 			<table class="table table-hover">

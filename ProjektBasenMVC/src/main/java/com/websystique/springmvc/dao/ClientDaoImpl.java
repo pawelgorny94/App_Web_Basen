@@ -46,7 +46,7 @@ public class ClientDaoImpl extends AbstractDao<Integer, Client> implements Clien
 		}*/
 		return clients;
 	}
-
+      
 	public void save(Client client) {
 		persist(client);
 	}

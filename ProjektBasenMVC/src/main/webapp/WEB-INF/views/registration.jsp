@@ -8,6 +8,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Dodawanie uzytkownika</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
 </head>
@@ -193,12 +194,20 @@
 				<div class="form-group col-md-12">
 					<label class="col-md-3 control-lable" for="type">Typ biletu</label>
 					<div class="col-md-7">
-						<!--<form:input type="text" path="type" id="password" class="form-control input-sm" />-->
-						<form:select type="text" id="password" path="type"  >
+						
+						<form:select type="text" id="sel" path="type" onchange="getVal(this);" >
+						<!--<form:input type="text" path="type" id="password" class="form-control input-sm" />
 						 <form:option  value="ulgowy"> --ULGOWY--</form:option>
-						  <form:option value="normalny"> --NORMALNY--</form:option>
-						   <form:option value="dzienny"> --DZIENNY--</form:option>
+						  <form:option value="normalny"> --NORMALNY--</form:option>-->
+						   <c:forEach items="${tickets}" var="ticket">
+                   <form:option value="${ticket.type}">${ticket.type}</form:option>                  
+                </c:forEach>
+						   
 						</form:select>
+						<c:forEach items="${tickets}" var="ticket">                   
+                   <input type="hidden" value="${ticket.price}" id="${ticket.type}" />
+                </c:forEach>
+						
 						
 						<div class="has-error">
 							<form:errors path="type" class="help-inline"/>
@@ -227,4 +236,18 @@
 					</c:choose>
 	</div>
 </body>
+
+<script type="text/javascript">
+
+function getVal(item)
+{
+   var par= item.value;
+   var element = document.getElementById(par);
+   var element2 = document.getElementById("password");
+   element2.value=element.value;
+   
+}
+
+</script>
+
 </html>

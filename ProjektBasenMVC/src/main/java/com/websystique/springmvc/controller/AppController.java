@@ -179,7 +179,9 @@ public class AppController {
 	@RequestMapping(value = { "/edit-user-{id}" }, method = RequestMethod.GET)
 	public String editUser(@PathVariable Integer id, ModelMap model) {
 		AllClients user = allclientsService.findById(id);
+		List<Ticket> tickets =  ticketService.findAllTicket();
 		model.addAttribute("allclients", user);
+		model.addAttribute("tickets",tickets);
 		model.addAttribute("edit", true);
 		model.addAttribute("loggedinuser", getPrincipal());
 		return "registration";

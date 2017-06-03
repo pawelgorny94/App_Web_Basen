@@ -528,7 +528,7 @@ $(function(){
                 
                 <div id="stan" class="panel panel-default"  style="position:fixed; width:900px;float:right;visibility:hidden;margin-left: 300px;margin-bottom: 500px;z-index: 50px; ">
 			  <!-- Default panel contents -->
-		  	<div class="panel-heading"><span class="lead">Stan klientów na basenie </span></div>
+		  	<div class="panel-heading"><span class="lead">Stan klientow na basenie </span><span style="color:red;font-size: 22px;">(${stan})</span></div>
 			<table id="tabstan" class="table table-hover">
 	    		<thead>
 		      		<tr>

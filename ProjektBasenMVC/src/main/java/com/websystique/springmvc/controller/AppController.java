@@ -77,11 +77,15 @@ public class AppController {
 		List<Ticket> tickets =  ticketService.findAllTicket();
 		List<User> users =  userService.findAllUsers();
 		List<AllClients> allclients =  allclientsService.findAllClient();
+		
+		String stan = String.valueOf(allclients.size());
+		
 		model.addAttribute("users", users);
 		model.addAttribute("clients", clients);
 		model.addAttribute("tickets", tickets);
 		model.addAttribute("allclients", allclients);
 		model.addAttribute("loggedinuser", getPrincipal());
+		model.addAttribute("stan",stan);
 		return "userslist";
 	}
 	

@@ -172,9 +172,20 @@ public class AppController {
 		return "registrationsuccess";
 	}
 
-	@RequestMapping(value = { "/invoke" }, method = RequestMethod.GET)
-	public String invokeUsers(ModelMap model) {
+	@RequestMapping(value = { "/invoke/{id}" }, method = RequestMethod.GET)
+	public String invokeUsers(@PathVariable Integer id,ModelMap model) {
 
+		
+		
+		
+		
+		AllClients all = allclientsService.findById(id);
+		String t=all.getType();
+		Ticket ticket = ticketService.findByType(t);
+		
+		model.addAttribute("all",all);
+		model.addAttribute("ticekt",ticket);
+		
 		
 		return "invoke";
 	}

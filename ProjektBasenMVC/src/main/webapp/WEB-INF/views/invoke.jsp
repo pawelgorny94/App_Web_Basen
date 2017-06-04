@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="h" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 
   
 	
@@ -14,6 +16,34 @@
 <title>Insert title here</title>
 
 <script >
+
+
+$(document).ready(function(){
+
+	  var brut = $('#brutto').val();
+	  var bruttoValue = brut*1.23;
+    
+      $("#item2 span").text(bruttoValue +" PLN");	
+     
+
+	});
+
+	
+	
+
+	
+		
+              
+                
+                 
+        
+    	 //$('#wejscie').css("visibility", "visible");
+       // $('#wejscie').toggle('slow'); // Toggles visibility.  Use the 'slow' parameter to add a nice effect.
+       
+
+       
+
+
 
 
 (function (document) {
@@ -412,12 +442,12 @@ tr:hover .cut { opacity: 1; }
    
 			<h1>Faktura</h1>
 			<address contenteditable>
-				<p>Pawel</p>
-				<p>Gorny Sipiory</p>
-				<p>545-54433-53453</p>
+				<p>${all.firstName }</p>
+				<p>${all.lastName }</p>
+				<p>${all.id}</p>
 			</address>
 			<span><img alt="" src="http://www.naquarius.naklo.pl/uploads/pub/ads_files/ads_3/logo.png"><input type="file" accept="image/*"></span>
-		</header>
+		</header>		
 		<article>
 			<h1>Kryta plywalnia</h1>
 			<address contenteditable>
@@ -439,7 +469,7 @@ tr:hover .cut { opacity: 1; }
 				</tr>
 				<tr>
 					<th><span contenteditable>Kwota</span></th>
-					<td><span id="prefix" contenteditable>PLN</span><span> </span></td>
+					<td><span id="prefix" contenteditable> ${ticekt.price} PLN</span><span> </span></td>
 				</tr>
 			</table>
 			<table class="inventory">
@@ -453,28 +483,34 @@ tr:hover .cut { opacity: 1; }
 					</tr>
 				</thead>
 				<tbody>
+				
 					<tr>
+					
 						<!-- <td><a class="cut">-</a><span contenteditable></span></td>-->
-						<td><span contenteditable> </span></td>
-						<td><span data-prefix>PLN</span><span contenteditable> </span></td>
-						<td><span contenteditable> </span></td>
-						<td><span data-prefix>PLN</span><span></span></td>
+						<td><span contenteditable style="display: block;text-align: center;"> ${ticekt.type} </span></td>
+						<td><span data-prefix></span><span contenteditable style="display: block;text-align: center;">-</span></td>
+						<td><span contenteditable style="display: block;text-align: center;">${ticekt.price} PLN</span></td>
+						<td><span data-prefix></span ><span style="display: block;text-align: center;">1</span></td>
+						<td><span contenteditable style="display: block;text-align: center;">${ticekt.price} PLN</span></td>
 					</tr>
+					
 				</tbody>
 			</table>
 			<!--  <a class="add">+</a>-->
 			<table class="balance">
 				<tr>
 					<th><span contenteditable>Cena netto</span></th>
-					<td><span data-prefix>PLN</span><span> </span></td>
+					<td><span data-prefix id="bruttoval">${ticekt.price} PLN</span><span> </span></td>
+					<input id="brutto" type="hidden" value="${ticekt.price}" ></input>
 				</tr>
 				<tr>
 					<th><span contenteditable>Podatek</span></th>
-					<td><span data-prefix>PLN</span><span> </span></td>
+					<td><span data-prefix>23%</span><span> </span></td>
 				</tr>
 				<tr>
 					<th><span contenteditable>Cena brutto</span></th>
-					<td><span data-prefix>PLN</span><span> </span></td>
+					
+					<td><div id='item2'><span data-prefix > </span></div><span> </span></td>
 				</tr>
 			</table>
 		</article>

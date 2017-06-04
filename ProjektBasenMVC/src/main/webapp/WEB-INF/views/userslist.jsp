@@ -284,6 +284,7 @@ $(function() {
                 var im = $('#idhidden1').val();
                 var naz = $('#idhidden2').val();
                 var typ = $('#idhidden3').val();
+                var idd = $('#idhidden4').val();
                
 		$('#wyjscie').css("visibility", "hidden");
         	//$('#kasa').css("visibility", "visible");
@@ -292,6 +293,9 @@ $(function() {
                  $('#im').val(im);
                  $('#naz').val(naz);
                  $('#typ').val(typ);
+                 $('#idd').val(idd);
+                 $('#href').attr("href","/ProjektBasenMVC/invoke"+"/"+idd);
+                 
         
     	 //$('#wejscie').css("visibility", "visible");
        // $('#wejscie').toggle('slow'); // Toggles visibility.  Use the 'slow' parameter to add a nice effect.
@@ -518,6 +522,7 @@ $(function(){
                                           <td><input id="idhidden1" type="hidden" value="${user.firstName}"/><td>
 					  <td><input id="idhidden2" type="hidden" value="${user.lastName}"/><td>
                                           <td><input id="idhidden3" type="hidden" value="${user.type}"/><td>
+                                           <td><input id="idhidden4" type="hidden" value="${user.id}"/><td>
 					</tr>
 				</c:forEach>
 				
@@ -658,11 +663,12 @@ $(function(){
 			  <!-- Default panel contents -->
 		  	<div class="panel-heading"><span class="lead">Rozliczenie</span>
 		  	<span class="input-group-addon">Imie</span>
-                        <input id="im" type="im" class="form-control" name="im"  placeholder="Imie">
+                        <input id="im" type="im" class="form-control" name="im"  placeholder="Imie">                        
 		  	 <span class="input-group-addon">Nazwisko</span>
                          <input id="naz" type="naz" class="form-control" name="naz"  placeholder="Nazwisko">
                          <span class="input-group-addon">Typ biletu</span>
                         <input id="typ" type="typ" class="form-control" name="typ"  placeholder="Typ">
+                        
                         <span id="clkas" class="pull-right" style=" background:rgba(0, 0, 0, 0.15);
     display: inline-block;padding: 6px 12px;border-radius: 4px;cursor: pointer;" data-effect="slideUp"><i class="fa fa-times"></i></span>
 		  	</div>
@@ -702,14 +708,17 @@ $(function(){
 						
 						</td>
 					   
-					   <td><label>DO ZAPLATY:</label></td>
-					   
-					   
+					   <td><label>DO ZAPLATY:</label>
+					    <input  id="idd" type="hidden" name="idd" />
+					    				    
+					  <input type="hidden" value="<%= request.getParameter("idd") %>"/> 
+					   </td>
+						   
 					</tr>
 				
 				<tr>
 				<sec:authorize access="hasRole('ADMIN') or hasRole('DBA')">
-							<td><a href="<c:url value='/invoke' />" class="btn btn-danger custom-width">Faktura </a></td>
+							<td><a id="href" href="<c:url value='/invoke' />"  class="btn btn-danger custom-width">Faktura </a></td>
 							
 				        </sec:authorize>
 				        

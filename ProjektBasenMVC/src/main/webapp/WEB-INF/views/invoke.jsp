@@ -24,9 +24,18 @@ $(document).ready(function(){
 	  var bruttoValue = brut*1.23;
     
       $("#item2 span").text(bruttoValue +" PLN");	
+
+
+      var bla = $('#idKlienta').val();
+     
      
 
+      
+       $('#buttonHref').attr("href","/ProjektBasenMVC/download"+"/"+bla);
+
 	});
+
+
 
 	
 	
@@ -440,11 +449,12 @@ tr:hover .cut { opacity: 1; }
     <span class="input-group-addon">Koszt podstawowy</span>
     
    
-			<h1>Faktura</h1>
+			<h1 style="display: block;text-align: center;">      Faktura</h1>
 			<address contenteditable>
 				<p>${all.firstName }</p>
 				<p>${all.lastName }</p>
 				<p>${all.id}</p>
+				<input type="hidden" id="idKlienta" value="${all.id}"/>
 			</address>
 			<span><img alt="" src="http://www.naquarius.naklo.pl/uploads/pub/ads_files/ads_3/logo.png"><input type="file" accept="image/*"></span>
 		</header>		
@@ -518,6 +528,11 @@ tr:hover .cut { opacity: 1; }
 			<h1><span contenteditable>Inne uwarunkowania</span></h1>
 			<div contenteditable>
 				<p>....</p>
+			</div>
+			
+			<div>
+			 
+			<a id="buttonHref" style="display: block;float: right;" href="/ProjektBasenMVC/download" >PDF</a>
 			</div>
 		</aside>
 

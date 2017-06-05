@@ -1,8 +1,27 @@
 package com.websystique.springmvc.controller;
 
+import java.awt.Color;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPRow;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -43,6 +62,8 @@ import com.websystique.springmvc.service.UserService;
 @RequestMapping("/")
 @SessionAttributes("roles")
 public class AppController {
+
+	private static final int BUFFER_SIZE = 0;
 
 	@Autowired
 	UserService userService;
@@ -188,6 +209,223 @@ public class AppController {
 		
 		
 		return "invoke";
+	}
+	
+	@RequestMapping(value = "/download/{id}" , method = RequestMethod.GET)
+	public void doDownload(@PathVariable Integer id,HttpServletRequest request,Map<String, Object> model,
+	       HttpServletResponse response) throws IOException, DocumentException {
+		ServletContext context = request.getSession().getServletContext();
+		
+		String presentationtype = "pdf";
+		// step 1
+		System.out.println("---inside servelit----");
+		//PageSize.A3.rotate()
+		Document document = new Document(new Rectangle(700.0f, 1000.0f), 10, 10, 10, 10);
+		PdfWriter writer = PdfWriter.getInstance(document, response.getOutputStream());
+		try {
+		// step 2: we set the ContentType and create an instance of the corresponding Writer
+		if ("pdf".equals(presentationtype)) {
+		response.setContentType("application/pdf");
+		 PdfWriter.getInstance(document, response.getOutputStream());
+		}
+		else if ("html".equals(presentationtype)) {
+		response.setContentType("text/html");
+		PdfWriter.getInstance(document, response.getOutputStream());
+		}
+		else {
+		response.sendRedirect("http://www.lowagie.com/iText/tutorial/ch01.html#step2");
+		}
+		// step 3
+		document.open();
+		
+		
+		AllClients all = allclientsService.findById(id);
+		String t=all.getType();
+		Ticket ticket = ticketService.findByType(t);
+		
+		
+		
+		 PdfPTable table = new PdfPTable(5);
+	        // the cell object
+		 table.setPaddingTop(10.0f);
+		 
+		 Font font = FontFactory.getFont(FontFactory.HELVETICA);
+	        font.setColor(BaseColor.WHITE);
+		 
+	        PdfPCell cell =new PdfPCell();
+	        // we add a cell with colspan 3
+	        cell.setBackgroundColor(BaseColor.BLACK);
+	        cell.setPadding(5);
+	     // write table header
+	        
+	        cell.setPhrase(new Phrase("FAKTURA", font));
+	        cell.setVerticalAlignment(Element.ALIGN_CENTER);
+	        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	       
+	        cell.setColspan(5);
+	        table.addCell(cell);
+	        // now we add a cell with rowspan 2
+	        cell = new PdfPCell(new Phrase(""));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(5);
+	       // cell.setRowspan(2);
+	        cell.setMinimumHeight(20.0f);
+	        table.addCell(cell);
+	        
+	        
+	        cell = new PdfPCell(new Phrase(all.getFirstName()+'\n'+ all.getLastName()+ '\n'+all.getId().toString()));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(2);
+	       // cell.setRowspan(2);
+	        cell.setMinimumHeight(100.0f);
+	        table.addCell(cell);
+	        
+	        Image img = Image.getInstance("http://www.naquarius.naklo.pl/uploads/pub/ads_files/ads_3/logo.png");
+	        img.setWidthPercentage(100.0f);
+	        //cell = new PdfPCell(new Phrase("Cell with rowspan 2"));
+	        cell = new PdfPCell(img, true);
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(3);
+	        cell.setMinimumHeight(100.0f);
+	        cell.setPaddingLeft(100.0f);
+	        cell.setPaddingBottom(100.0f);
+	       // cell.setRowspan(2);
+	        table.addCell(cell);
+	        
+	        
+	        
+	        cell = new PdfPCell(new Phrase(""));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(5);
+	       // cell.setRowspan(2);
+	        cell.setMinimumHeight(20.0f);
+	        table.addCell(cell);
+	        
+	        
+	        Font font2 = FontFactory.getFont(FontFactory.HELVETICA);
+	        font2.setColor(BaseColor.BLACK);
+	        font2.setSize(10.0f);
+	        
+	        //przerwa
+	        cell = new PdfPCell(new Phrase("NAQUARIUS\nNAK£O NAD NOTECIA",font2));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(5);
+	       // cell.setRowspan(2);
+	       
+	        cell.setVerticalAlignment(Element.ALIGN_LEFT);
+	        cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+	        cell.setMinimumHeight(70.0f);
+	        table.addCell(cell);
+	        
+	        PdfPCell cell2 =new PdfPCell(new Phrase("Rodzaj"));
+	        // we add a cell with colspan 3
+	       
+	       
+	        cell2.setBorderColor(BaseColor.DARK_GRAY);
+	        
+	        table.addCell(cell2);
+	        
+	     
+	        table.addCell("Opis");
+	     
+	        table.addCell("Cena za godzine");
+	     
+	        table.addCell("Ilosc");
+	      
+	        table.addCell("Cena ogólna");
+	        
+	   
+	        table.addCell(ticket.getType());
+	     
+	        table.addCell("-");
+	       
+	        table.addCell(ticket.getPrice());
+	      
+	        table.addCell("1");
+	      
+	        table.addCell(ticket.getPrice());
+	        
+	        //przerwa
+	        cell = new PdfPCell(new Phrase(""));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(5);
+	       // cell.setRowspan(2);
+	        cell.setMinimumHeight(60.0f);
+	        table.addCell(cell);
+	        
+	        cell = new PdfPCell(new Phrase(""));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(3);
+	       // cell.setRowspan(2);
+	        
+	        table.addCell(cell);
+	        //1
+	                   
+	              
+	      	         
+	       
+		
+		//document.add(new Paragraph(new Date().toString()));
+		document.add(table);
+		
+		
+		}
+		catch(DocumentException de) {
+		de.printStackTrace();
+		System.err.println("document: " + de.getMessage());
+		}
+		// step 5: we close the document (the outputstream is also closed internally)
+		document.close();
+		
+		
+		  
+		/* String appPath = context.getRealPath("");
+  final String FILE_NAME = appPath + "WEB-INF/lib/itext.pdf";
+
+	   // get absolute path of the application
+	   
+	   String filename= request.getParameter("filename");
+	   //filePath = getDownloadFilePath(lessonName);
+	   
+	   Document document = new Document();
+	   PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
+
+	  
+
+      
+
+	   // construct the complete absolute path of the file
+	   String fullPath = appPath + "WEB-INF/lib/201507.pdf";     
+	   File downloadFile = new File(fullPath);
+	   FileInputStream inputStream = new FileInputStream(downloadFile);*/
+
+	   // get MIME type of the file
+	 /*  String mimeType = context.getMimeType(fullPath);
+	   if (mimeType == null) {
+	       // set to binary type if MIME mapping not found
+	       mimeType = "application/pdf";
+	   }
+	   System.out.println("MIME type: " + mimeType);
+
+
+	   String headerKey = "Content-Disposition";
+
+	   //response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
+	   response.setContentType("application/pdf");
+
+	   // get output stream of the response
+	   OutputStream outStream = response.getOutputStream();
+
+	   byte[] buffer = new byte[BUFFER_SIZE];
+	   int bytesRead = -1;
+
+	   // write bytes read from the input stream into the output stream
+	   while ((bytesRead = inputStream.read(buffer)) != -1) {
+	       outStream.write(buffer, 0, bytesRead);
+	   }
+
+	   inputStream.close();
+	   outStream.close();*/
 	}
 	
 	

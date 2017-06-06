@@ -294,7 +294,7 @@ $(function() {
                  $('#naz').val(naz);
                  $('#typ').val(typ);
                  $('#idd').val(idd);
-                 $('#href').attr("href","/ProjektBasenMVC/invoke"+"/"+idd);
+                 $('#href').attr("href","/SpringMVCHibernateWithSpringSecurityExample/invoke"+"/"+idd);
                  
         
     	 //$('#wejscie').css("visibility", "visible");

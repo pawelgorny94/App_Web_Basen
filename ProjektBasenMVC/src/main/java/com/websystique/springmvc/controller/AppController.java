@@ -55,6 +55,8 @@ import com.websystique.springmvc.service.ClientService;
 import com.websystique.springmvc.service.TicketService;
 import com.websystique.springmvc.service.UserProfileService;
 import com.websystique.springmvc.service.UserService;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 
 
 
@@ -273,7 +275,7 @@ public class AppController {
 	        table.addCell(cell);
 	        
 	        
-	        cell = new PdfPCell(new Phrase(all.getFirstName()+'\n'+ all.getLastName()+ '\n'+all.getId().toString()));
+	        cell = new PdfPCell(new Phrase("Identyfikator:  " + all.getId().toString()+'\n' + "Imie:               " + all.getFirstName()+'\n'+ "Nazwisko:      "+ all.getLastName()+ '\n'));
 	        cell.setBorderColor(BaseColor.WHITE);
 	        cell.setColspan(2);
 	       // cell.setRowspan(2);
@@ -301,13 +303,54 @@ public class AppController {
 	        cell.setMinimumHeight(20.0f);
 	        table.addCell(cell);
 	        
+                //<->
+                PdfPCell cell4 = new PdfPCell(new Phrase(""));
+        cell4.setBorderColor(BaseColor.WHITE);
+        cell4.setColspan(5);
+        table.addCell(cell4);
+        table.addCell(cell4);
+        cell4 = new PdfPCell(new Phrase(""));
+        cell4.setBorderColor(BaseColor.WHITE);
+        cell4.setColspan(2);
+        table.addCell(cell4);
+        cell4 = new PdfPCell(new Phrase("Data"));
+	cell4.setBorderColor(BaseColor.BLACK);
+	cell4.setColspan(1);
+        table.addCell(cell4);
+        Date currentDate = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        String dateString = dateFormat.format(currentDate);
+        cell4 = new PdfPCell(new Phrase(dateString));
+	cell4.setBorderColor(BaseColor.BLACK);
+	cell4.setColspan(2);
+        table.addCell(cell4);
+        cell4 = new PdfPCell(new Phrase(""));
+        cell4.setBorderColor(BaseColor.WHITE);
+        cell4.setColspan(2);
+        table.addCell(cell4);
+        cell4 = new PdfPCell(new Phrase("Kwota"));
+	cell4.setBorderColor(BaseColor.BLACK);
+	cell4.setColspan(1);
+        table.addCell(cell4);
+        cell4 = new PdfPCell(new Phrase(ticket.getPrice() + " PLN"));
+	cell4.setBorderColor(BaseColor.BLACK);
+	cell4.setColspan(2);
+        table.addCell(cell4);
+      
+        //<->
+        cell4 = new PdfPCell(new Phrase(""));
+	cell4.setBorderColor(BaseColor.WHITE);
+	cell4.setColspan(5);
+        table.addCell(cell4);
+                //<->
 	        
 	        Font font2 = FontFactory.getFont(FontFactory.HELVETICA);
 	        font2.setColor(BaseColor.BLACK);
-	        font2.setSize(10.0f);
+                font2.isBold();
+	        font2.setSize(20.0f);
 	        
 	        //przerwa
-	        cell = new PdfPCell(new Phrase("NAQUARIUS\nNAK£O NAD NOTECIA",font2));
+	        cell = new PdfPCell(new Phrase("NAQUARIUS\nNAKLO NAD NOTECIA",font2));
 	        cell.setBorderColor(BaseColor.WHITE);
 	        cell.setColspan(5);
 	       // cell.setRowspan(2);
@@ -317,33 +360,130 @@ public class AppController {
 	        cell.setMinimumHeight(70.0f);
 	        table.addCell(cell);
 	        
-	        PdfPCell cell2 =new PdfPCell(new Phrase("Rodzaj"));
-	        // we add a cell with colspan 3
-	       
-	       
-	        cell2.setBorderColor(BaseColor.DARK_GRAY);
-	        
-	        table.addCell(cell2);
-	        
-	     
-	        table.addCell("Opis");
-	     
-	        table.addCell("Cena za godzine");
-	     
-	        table.addCell("Ilosc");
-	      
-	        table.addCell("Cena ogólna");
-	        
-	   
-	        table.addCell(ticket.getType());
-	     
-	        table.addCell("-");
-	       
-	        table.addCell(ticket.getPrice());
-	      
-	        table.addCell("1");
-	      
-	        table.addCell(ticket.getPrice());
+	        //<->
+                
+                //<->
+        PdfPCell cell3 = new PdfPCell(new Phrase(""));
+        cell3.setBorderColor(BaseColor.WHITE);
+        cell3.setColspan(5);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("Rodzaj"));
+        cell3.setColspan(2);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase(ticket.getType()));
+	cell3.setBorderColor(BaseColor.BLACK);
+	cell3.setColspan(3);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("Opis"));
+        cell3.setColspan(2);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("-"));
+	cell3.setBorderColor(BaseColor.BLACK);
+	cell3.setColspan(3);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("Cena za godzine"));
+        cell3.setColspan(2);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase(ticket.getPrice() + " PLN"));
+	cell3.setBorderColor(BaseColor.BLACK);
+	cell3.setColspan(3);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("Ilosc"));
+        cell3.setColspan(2);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("1"));
+	cell3.setBorderColor(BaseColor.BLACK);
+	cell3.setColspan(3);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase("Cena ogolna"));
+        cell3.setColspan(2);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase(ticket.getPrice() + " PLN"));
+	cell3.setBorderColor(BaseColor.BLACK);
+	cell3.setColspan(3);
+        table.addCell(cell3);
+        cell3 = new PdfPCell(new Phrase(""));
+        cell3.setBorderColor(BaseColor.WHITE);
+        cell3.setColspan(5);
+        table.addCell(cell3);
+                //<->
+               //przerwa
+	        cell = new PdfPCell(new Phrase(""));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(5);
+	       // cell.setRowspan(2);
+	        cell.setMinimumHeight(60.0f);
+	        table.addCell(cell); 
+                
+        PdfPCell cell7 = new PdfPCell(new Phrase(""));
+        cell7.setBorderColor(BaseColor.WHITE);
+        cell7.setColspan(5);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase(""));
+        cell7.setBorderColor(BaseColor.WHITE);
+        cell7.setColspan(2);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase("Cena netto"));
+	cell7.setBorderColor(BaseColor.BLACK);
+	cell7.setColspan(1);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase(ticket.getPrice() + " PLN"));
+	cell7.setBorderColor(BaseColor.BLACK);
+	cell7.setColspan(2);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase(""));
+        cell7.setBorderColor(BaseColor.WHITE);
+        cell7.setColspan(2);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase("Podatek"));
+	cell7.setBorderColor(BaseColor.BLACK);
+	cell7.setColspan(1);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase("23%"));
+	cell7.setBorderColor(BaseColor.BLACK);
+	cell7.setColspan(2);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase(""));
+        cell7.setBorderColor(BaseColor.WHITE);
+        cell7.setColspan(2);
+        table.addCell(cell7);
+        cell7 = new PdfPCell(new Phrase("Cena brutto"));
+	cell7.setBorderColor(BaseColor.BLACK);
+	cell7.setColspan(1);
+        table.addCell(cell7);
+        //Brutto
+        double netto = Double.parseDouble(ticket.getPrice());
+        double brutto = netto + (netto*0.23);
+        String total = Double.toString(brutto);
+        cell7 = new PdfPCell(new Phrase(total + " PLN"));
+	cell7.setBorderColor(BaseColor.BLACK);
+	cell7.setColspan(2);
+        table.addCell(cell7);
+      
+        //<->
+        cell7 = new PdfPCell(new Phrase(""));
+	cell7.setBorderColor(BaseColor.WHITE);
+	cell7.setColspan(5);
+        table.addCell(cell7);
+        //<->
+               //przerwa
+	        cell = new PdfPCell(new Phrase(""));
+	        cell.setBorderColor(BaseColor.WHITE);
+	        cell.setColspan(5);
+	       // cell.setRowspan(2);
+	        cell.setMinimumHeight(60.0f);
+	        table.addCell(cell); 
+                
+                Font font3 = FontFactory.getFont(FontFactory.HELVETICA);
+	        font3.setColor(BaseColor.BLACK);
+                font3.isStrikethru();
+	        font3.setSize(15.0f);
+        
+                PdfPCell cell8 = new PdfPCell(new Phrase("                                    I N N E   U W A R U N K O W A N I A",font3));
+        cell8.setBorderColor(BaseColor.WHITE);
+        cell8.setColspan(5);
+        table.addCell(cell8);
+        
 	        
 	        //przerwa
 	        cell = new PdfPCell(new Phrase(""));
@@ -376,56 +516,6 @@ public class AppController {
 		}
 		// step 5: we close the document (the outputstream is also closed internally)
 		document.close();
-		
-		
-		  
-		/* String appPath = context.getRealPath("");
-  final String FILE_NAME = appPath + "WEB-INF/lib/itext.pdf";
-
-	   // get absolute path of the application
-	   
-	   String filename= request.getParameter("filename");
-	   //filePath = getDownloadFilePath(lessonName);
-	   
-	   Document document = new Document();
-	   PdfWriter.getInstance(document, new FileOutputStream(new File(FILE_NAME)));
-
-	  
-
-      
-
-	   // construct the complete absolute path of the file
-	   String fullPath = appPath + "WEB-INF/lib/201507.pdf";     
-	   File downloadFile = new File(fullPath);
-	   FileInputStream inputStream = new FileInputStream(downloadFile);*/
-
-	   // get MIME type of the file
-	 /*  String mimeType = context.getMimeType(fullPath);
-	   if (mimeType == null) {
-	       // set to binary type if MIME mapping not found
-	       mimeType = "application/pdf";
-	   }
-	   System.out.println("MIME type: " + mimeType);
-
-
-	   String headerKey = "Content-Disposition";
-
-	   //response.addHeader("Content-Disposition", "attachment;filename=report.pdf");
-	   response.setContentType("application/pdf");
-
-	   // get output stream of the response
-	   OutputStream outStream = response.getOutputStream();
-
-	   byte[] buffer = new byte[BUFFER_SIZE];
-	   int bytesRead = -1;
-
-	   // write bytes read from the input stream into the output stream
-	   while ((bytesRead = inputStream.read(buffer)) != -1) {
-	       outStream.write(buffer, 0, bytesRead);
-	   }
-
-	   inputStream.close();
-	   outStream.close();*/
 	}
 	
 	

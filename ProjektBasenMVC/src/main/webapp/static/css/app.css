@@ -35,6 +35,10 @@ background-image: linear-gradient(to top, #003399 0%, #0066CC 8%, #3399FF 100%, 
 	color:red;
 }
 
+.has-error2{
+	color:red;
+}
+
 .generic-container {
   position:fixed;
   width:80%;

@@ -31,7 +31,7 @@ $(document).ready(function(){
      
 
       
-       $('#buttonHref').attr("href","/SpringMVCHibernateWithSpringSecurityExample/download"+"/"+bla);
+       $('#buttonHref').attr("href","/ProjektBasenMVC/download"+"/"+bla);
 
 	});
 

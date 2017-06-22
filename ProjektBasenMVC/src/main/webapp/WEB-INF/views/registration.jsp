@@ -11,6 +11,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
 	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -30,6 +31,7 @@
 					<label class="col-md-3 control-lable" for="firstName">Imie</label>
 					<div class="col-md-7">
 						<form:input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
+						<span id="errorFirstName"></span>
 						<div class="has-error">
 						
 							<form:errors path="firstName" class="help-inline"/>
@@ -136,6 +138,7 @@
 						<div class="has-error">
 							<form:errors path="firstName" class="help-inline"/>
 						</div>
+					
 					</div>
 				</div>
 			</div>
@@ -145,7 +148,7 @@
 					<label class="col-md-3 control-lable" for="lastName">Nazwisko</label>
 					<div class="col-md-7">
 						<form:input type="text" path="lastName" id="lastName" class="form-control input-sm" />
-						<div class="has-error">
+						<div class="has-error2">
 							<form:errors path="lastName" class="help-inline"/>
 						</div>
 					</div>
@@ -169,9 +172,7 @@
 							</c:when>
 							<c:otherwise>
 								<!--<form:input type="text" path="id" id="ssoId" class="form-control input-sm" />-->
-								<div class="has-error">
-									<form:errors path="id" class="help-inline"/>
-								</div>
+								
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -183,9 +184,7 @@
 					<label class="col-md-3 control-lable" for="price">Cena</label>
 					<div class="col-md-7">
 						<form:input type="text" path="price" id="password" class="form-control input-sm" />
-						<div class="has-error">
-							<form:errors path="price" class="help-inline"/>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -209,9 +208,7 @@
                 </c:forEach>
 						
 						
-						<div class="has-error">
-							<form:errors path="type" class="help-inline"/>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -225,7 +222,8 @@
 							<input type="submit" value="Aktualizuj" class="btn btn-primary btn-sm"/> lub <a href="<c:url value='/list' />">Anuluj</a>
 						</c:when>
 						<c:otherwise>
-							<input type="submit" value="Dodaj klienta" class="btn btn-primary btn-sm"/> lub <a href="<c:url value='/list' />">Anuluj</a>
+						    	<div class="g-recaptcha" data-callback="recaptchaCallback"  style="margin-bottom: 20px" data-sitekey="6LcmpyAUAAAAAAQS1YEQn79uq7rNe8fWTrvt1i77"></div>
+							<input type="submit" id="submitButton" value="Dodaj klienta" class="btn btn-primary btn-sm" disabled/> lub <a href="<c:url value='/list' />">Anuluj</a>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -239,6 +237,12 @@
 
 <script type="text/javascript">
 
+function recaptchaCallback() {
+    $('#submitButton').removeAttr('disabled');
+};
+
+
+
 function getVal(item)
 {
    var par= item.value;
@@ -247,6 +251,102 @@ function getVal(item)
    element2.value=element.value;
    
 }
+
+$(function(){
+    $('#firstName').keyup(function(){
+    	var myLength = $("#firstName").val().length;
+		var myTextBox = $("#firstName").val();
+		
+		
+
+		
+		if($.isNumeric(myTextBox) || myLength<0 || myLength>20 ){
+			
+			$("div .has-error").empty();
+			 $("div .has-error").append("Blad wprowadzania danych!");
+			 $('#submitButton').attr("disabled", true);
+			}
+		else{
+			$("div .has-error").empty();
+			
+			}
+		 
+    });
+});
+
+
+$(function(){
+    $('#lastName').keyup(function(){
+    	var myLength = $("#lastName").val().length;
+		var myTextBox = $("#lastName").val();
+
+
+		 var regex = new RegExp(/[^0-9]/g);
+		    var containsNonNumeric = this.value.match(regex);
+		    if (containsNonNumeric){
+		       
+		    }
+		
+		
+
+		
+		if($.isNumeric(myTextBox) || myLength<0 || myLength>20 ){
+			
+			$("div .has-error2").empty();
+			 $("div .has-error2").append("Blad wprowadzania danych!");
+			 $('#submitButton').attr("disabled", true);
+			}
+		else{
+			$("div .has-error2").empty();
+			
+			}
+		 
+    });
+});
+
+$(document).ready(function() {
+	$( ".generic-container" ).click(function() {
+
+		var myLength = $("#lastName").val().length;
+		var myTextBox = $("#lastName").val();
+
+		if($.isNumeric(myTextBox) || myLength<0 || myLength>20 ){
+			
+			$("div .has-error2").empty();
+			 $("div .has-error2").append("Blad wprowadzania danych!");
+			 $('#submitButton').attr("disabled", true);
+			}
+		else{
+			$("div .has-error2").empty();
+			
+			}
+		 
+			
+		
+		});
+});
+
+$(document).ready(function() {
+	$( ".generic-container" ).click(function() {
+
+		var myLength = $("#firstName").val().length;
+		var myTextBox = $("#firstName").val();
+
+		if($.isNumeric(myTextBox) || myLength<0 || myLength>20 ){
+			
+			$("div .has-error").empty();
+			 $("div .has-error").append("Blad wprowadzania danych!");
+			 $('#submitButton').attr("disabled", true);
+			}
+		else{
+			$("div .has-error").empty();
+			
+			}
+		 
+			
+		
+		});
+});
 
 </script>
 
